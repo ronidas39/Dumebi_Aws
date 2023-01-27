@@ -2,23 +2,46 @@
 #john1
 #john2
 
-
 import boto3
+import io
+
 client=boto3.client("iam")
-try:
-    client.get_user(UserName="john50")
-    response="FOUND"
-    # tags=response["User"]["Tags"]
-    # for tag in tags:
-    #    print(tag["Key"]+"="+tag["Value"])
 
-except Exception as e:
-    print(str(e))
-    response="NOT_FOUND"
+with io.open("input.csv","r",encoding="utf-8")as f1:
+    data=f1.read()
+    f1.close()
 
-if response=="NOT_FOUND":
-    #NORMAL CREATION
-else:
-    #1 ,2,3,4
-    username="john50"+"1"
+lines=data.split("\n")[1:]
+
+for line in lines:
+    try:
+        username=line.split(",")[0]
+        client.get_user(UserName=username)
+        response="FOUND"
+        for i in range(1,100):
+            modified_username=username+str(i)
+            try:
+                client.get_user(UserName=modified_username)
+            except Exception as e:
+                print(str(e))
+                response="NOT_FOUND"
+                username=modified_username
+                break
+
+
+    except Exception as e:
+        print(str(e)+", hence this user is a new user")
+        response="NOT_FOUND"
+        username=username
+        
+
+
+    if response=="NOT_FOUND":
+        client.create_user(UserName=username)
+        print(username)
+  
+    else:
+        client.create_user(UserName=username)
+        print(username)
+
 
