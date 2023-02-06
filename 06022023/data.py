@@ -1,0 +1,43 @@
+x={
+   "Records":[
+      {
+         "eventVersion":"2.1",
+         "eventSource":"aws:s3",
+         "awsRegion":"us-east-1",
+         "eventTime":"2023-02-06T15:10:36.641Z",
+         "eventName":"ObjectCreated:Put",
+         "userIdentity":{
+            "principalId":"A3F5WWPIERA9AN"
+         },
+         "requestParameters":{
+            "sourceIPAddress":"103.87.141.33"
+         },
+         "responseElements":{
+            "x-amz-request-id":"33F74P0S637SWKPQ",
+            "x-amz-id-2":"mcZJxhX/JIazw2H5zWjmNfFcvZ4uO3E/jyWIfkdsZTk2d7n1nkcv413nAK79dPTy/8glHwmyEOS/DKpDwsz7RZ/o5a0046fE"
+         },
+         "s3":{
+            "s3SchemaVersion":"1.0",
+            "configurationId":"test",
+            "bucket":{
+               "name":"roni-jan29-test1",
+               "ownerIdentity":{
+                  "principalId":"A3F5WWPIERA9AN"
+               },
+               "arn":"arn:aws:s3:::roni-jan29-test1"
+            },
+            "object":{
+               "key":"practise.png",
+               "size":223568,
+               "eTag":"e148c7d399fb581c6389260ecb6a2cd9",
+               "sequencer":"0063E1186C8783E83A"
+            }
+         }
+      }
+   ]
+}
+
+bucket=x["Records"][0]["s3"]["bucket"]["name"]
+file=x["Records"][0]["s3"]["object"]["key"]
+print(bucket,file)
+
